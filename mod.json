@@ -1,0 +1,17 @@
+{
+  "Name": "Ninjago Mod",
+  "Author": "U1timateJ7",
+  "Description": "Adds ninjago characters and weapons onto the game.",
+  "ModVersion": "1.0",
+  "GameVersion": "1.21+",
+  "ThumbnailPath": "sprites/thumbnail.png",
+  "EntryPoint": "Ninjago.Mod",
+  "Tags": [],
+  "Scripts": [
+    "mod.cs",
+    "CategoryBuilder.cs"
+  ],
+  "Active": true,
+  "UGCIdentity": null,
+  "CreatorUGCIdentity": null
+}
