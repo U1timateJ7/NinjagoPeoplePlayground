@@ -247,6 +247,7 @@ namespace Ninjago
                         body.gameObject.AddComponent<CycleSkinTextures>();
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Nya/nya.png"), true, "Nya", ModAPI.LoadSprite("sprites/Nya/nyaHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Nya/samuraiX.png"), true, "Samurai X", ModAPI.LoadSprite("sprites/Nya/samuraiXHair.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Nya/samuraiX.png"), true, "Samurai X (No Helmet)", ModAPI.LoadSprite("sprites/Nya/nyaHair.png"));
                     }
                 }
             });
