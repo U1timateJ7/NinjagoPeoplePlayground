@@ -60,6 +60,8 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiStoneArmorMaskless.png"), true, "Stone Armor (No Mask)", ModAPI.LoadSprite("sprites/Kai/kaiHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiTournament.png"), true, "Tournament", ModAPI.LoadSprite("sprites/Kai/kaiHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiTournamentMaskless.png"), true, "Tournament (No Mask)", ModAPI.LoadSprite("sprites/Kai/kaiHair.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiJungle.png"), true, "Jungle", ModAPI.LoadSprite("sprites/empty.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiJungleMaskless.png"), true, "Jungle (No Mask)", ModAPI.LoadSprite("sprites/Kai/kaiHair.png"));
                     }
                 }
             });
@@ -105,6 +107,8 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Jay/jayStoneArmorMaskless.png"), true, "Stone Armor (No Mask)", ModAPI.LoadSprite("sprites/Jay/jayHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Jay/jayTournament.png"), true, "Tournament", ModAPI.LoadSprite("sprites/Jay/jayHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Jay/jayTournamentMaskless.png"), true, "Tournament (No Mask)", ModAPI.LoadSprite("sprites/Jay/jayHair.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Jay/jayJungle.png"), true, "Jungle", ModAPI.LoadSprite("sprites/empty.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Jay/jayJungleMaskless.png"), true, "Jungle (No Mask)", ModAPI.LoadSprite("sprites/Jay/jayHair.png"));
                     }
                 }
             });
@@ -150,6 +154,8 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Cole/coleStoneArmorMaskless.png"), true, "Stone Armor (No Mask)", ModAPI.LoadSprite("sprites/Cole/coleHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Cole/coleTournament.png"), true, "Tournament", ModAPI.LoadSprite("sprites/Cole/coleHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Cole/coleTournamentMaskless.png"), true, "Tournament (No Mask)", ModAPI.LoadSprite("sprites/Cole/coleHair.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Cole/coleJungle.png"), true, "Jungle", ModAPI.LoadSprite("sprites/empty.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Cole/coleJungleMaskless.png"), true, "Jungle (No Mask)", ModAPI.LoadSprite("sprites/Cole/coleHair.png"));
                     }
                 }
             });
@@ -195,6 +201,8 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Zane/zaneTechnoMaskless.png"), true, "Techno (No Mask)", ModAPI.LoadSprite("sprites/Zane/zaneHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Zane/zaneStoneArmor.png"), true, "Stone Armor", ModAPI.LoadSprite("sprites/Zane/zaneHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Zane/zaneStoneArmorMaskless.png"), true, "Stone Armor (No Mask)", ModAPI.LoadSprite("sprites/Zane/zaneHair.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Zane/zaneJungle.png"), true, "Jungle", ModAPI.LoadSprite("sprites/empty.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Zane/zaneJungleMaskless.png"), true, "Jungle (No Mask)", ModAPI.LoadSprite("sprites/Zane/zaneTitaniumHair.png"));
                     }
 
                     Instance.transform.localScale = Vector2.one * Random.Range(1.59f, 2f) / 2f / 0.82397f;
@@ -246,6 +254,8 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydStoneArmorMaskless.png"), true, "Stone Armor (No Mask)", ModAPI.LoadSprite("sprites/Lloyd/lloydHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydTournament.png"), true, "Tournament", ModAPI.LoadSprite("sprites/Lloyd/lloydHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydTournamentMaskless.png"), true, "Tournament (No Mask)", ModAPI.LoadSprite("sprites/Lloyd/lloydHair.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydJungle.png"), true, "Jungle", ModAPI.LoadSprite("sprites/empty.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydJungleMaskless.png"), true, "Jungle (No Mask)", ModAPI.LoadSprite("sprites/Lloyd/lloydHair.png"));
                     }
                 }
             });
