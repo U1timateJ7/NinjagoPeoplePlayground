@@ -47,6 +47,7 @@ namespace Ninjago
                     {
                         body.DiscomfortingHeatTemperature = float.MaxValue;
                         body.PhysicalBehaviour.BurningProgressionMultiplier = 0;
+
                         body.gameObject.AddComponent<CycleSkinTextures>();
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kai.png"), true, "Original", ModAPI.LoadSprite("sprites/empty.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiMaskless.png"), true, "Original (No Mask)", ModAPI.LoadSprite("sprites/Kai/kaiHair.png"));
@@ -70,6 +71,8 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiDestinyMaskless.png"), true, "Destiny (No Mask)", ModAPI.LoadSprite("sprites/Kai/kaiHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiHonor.png"), true, "Honor", ModAPI.LoadSprite("sprites/empty.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiHonorMaskless.png"), true, "Honor (No Mask)", ModAPI.LoadSprite("sprites/Kai/kaiHair.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiFusion.png"), true, "Fusion", ModAPI.LoadSprite("sprites/empty.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiFusionMaskless.png"), true, "Fusion (No Mask)", ModAPI.LoadSprite("sprites/Kai/kaiHair.png"));
                     }
                 }
             });
@@ -102,6 +105,10 @@ namespace Ninjago
                     var person = Instance.GetComponent<PersonBehaviour>();
                     foreach (var body in person.Limbs)
                     {
+                        body.PhysicalBehaviour.ForceNoCharge = true;
+                        body.PhysicalBehaviour.ChargeBurns = false;
+                        body.PhysicalBehaviour.EnergyWireResistance = float.MaxValue;
+
                         body.gameObject.AddComponent<CycleSkinTextures>();
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Jay/jay.png"), true, "Original", ModAPI.LoadSprite("sprites/empty.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Jay/jayMaskless.png"), true, "Original (No Mask)", ModAPI.LoadSprite("sprites/Jay/jayHair.png"));
@@ -125,6 +132,8 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Jay/jayDestinyMaskless.png"), true, "Destiny (No Mask)", ModAPI.LoadSprite("sprites/Jay/jayHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Jay/jayHonor.png"), ModAPI.LoadTexture("sprites/Jay/jayHonorArm.png"), new string[] { "UpperArmFront", "LowerArmFront" }, true, "Honor", ModAPI.LoadSprite("sprites/empty.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Jay/jayHonorMaskless.png"), ModAPI.LoadTexture("sprites/Jay/jayHonorArm.png"), new string[] { "UpperArmFront", "LowerArmFront" }, true, "Honor (No Mask)", ModAPI.LoadSprite("sprites/Jay/jayHair.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Jay/jayFusion.png"), true, "Fusion", ModAPI.LoadSprite("sprites/empty.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Jay/jayFusionMaskless.png"), true, "Fusion (No Mask)", ModAPI.LoadSprite("sprites/Jay/jayHair.png"));
                     }
                 }
             });
@@ -184,6 +193,8 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Cole/coleHonorGhostMaskless.png"), true, "Honor (Ghost, No Mask)", ModAPI.LoadSprite("sprites/Cole/coleHairGhost.png"), ModAPI.LoadTexture("sprites/Cole/ghostFlesh.png"), ModAPI.LoadTexture("sprites/Cole/ghostBone.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Cole/coleHonor.png"), true, "Honor", ModAPI.LoadSprite("sprites/empty.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Cole/coleHonorMaskless.png"), true, "Honor (No Mask)", ModAPI.LoadSprite("sprites/Cole/coleHair.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Cole/coleFusion.png"), true, "Fusion", ModAPI.LoadSprite("sprites/empty.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Cole/coleFusionMaskless.png"), true, "Fusion (No Mask)", ModAPI.LoadSprite("sprites/Cole/coleHair.png"));
                     }
                 }
             });
@@ -239,6 +250,8 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Zane/zaneDestinyMaskless.png"), true, "Destiny (No Mask)", ModAPI.LoadSprite("sprites/Zane/zaneTitaniumHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Zane/zaneHonor.png"), true, "Honor", ModAPI.LoadSprite("sprites/empty.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Zane/zaneHonorMaskless.png"), true, "Honor (No Mask)", ModAPI.LoadSprite("sprites/Zane/zaneTitaniumHair.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Zane/zaneFusion.png"), true, "Fusion", ModAPI.LoadSprite("sprites/empty.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Zane/zaneFusionMaskless.png"), true, "Fusion (No Mask)", ModAPI.LoadSprite("sprites/Zane/zaneTitaniumHair.png"));
                     }
 
                     Instance.transform.localScale = Vector2.one * Random.Range(1.59f, 2f) / 2f / 0.82397f;
@@ -298,6 +311,8 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydDestinyMaskless.png"), true, "Destiny (No Mask)", ModAPI.LoadSprite("sprites/Lloyd/lloydHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydHonor.png"), true, "Honor", ModAPI.LoadSprite("sprites/empty.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydHonorMaskless.png"), true, "Honor (No Mask)", ModAPI.LoadSprite("sprites/Lloyd/lloydHair.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydFusion.png"), true, "Fusion", ModAPI.LoadSprite("sprites/empty.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydFusionMaskless.png"), true, "Fusion (No Mask)", ModAPI.LoadSprite("sprites/Lloyd/lloydHair.png"));
                     }
                 }
             });
@@ -340,6 +355,8 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Nya/nyaDestinyMaskless.png"), true, "Destiny (No Mask)", ModAPI.LoadSprite("sprites/Nya/nyaHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Nya/nyaHonor.png"), true, "Honor", ModAPI.LoadSprite("sprites/empty.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Nya/nyaHonorMaskless.png"), true, "Honor (No Mask)", ModAPI.LoadSprite("sprites/Nya/nyaHair.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Nya/nyaFusion.png"), true, "Fusion", ModAPI.LoadSprite("sprites/empty.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Nya/nyaFusionMaskless.png"), true, "Fusion (No Mask)", ModAPI.LoadSprite("sprites/Nya/nyaHair.png"));
                     }
                 }
             });
@@ -446,6 +463,50 @@ namespace Ninjago
                     Instance.transform.localScale = Vector2.one * Random.Range(1.59f, 2f) / 2f / 0.82397f;
 
                     Instance.GetComponent<PersonBehaviour>().SetBodyTextures(skin);
+                }
+            });
+
+            //Ronin
+            ModAPI.Register(
+            new Modification()
+            {
+                OriginalItem = ModAPI.FindSpawnable("Human"),
+                NameOverride = "Ronin" + ModTag,
+                DescriptionOverride = "In life, there's always second chances.",
+                CategoryOverride = ModAPI.FindCategory("Ninjago"),
+                NameToOrderByOverride = "9-0",
+                ThumbnailOverride = ModAPI.LoadSprite("sprites/Thumbnails/roninThumbnail.png"),
+                AfterSpawn = (Instance) =>
+                {
+                    var skin = ModAPI.LoadTexture("sprites/Characters/ronin.png");
+                    Instance.GetComponent<PersonBehaviour>().SetBodyTextures(skin);
+
+                    var head = Instance.transform.GetChild(5);
+                    var childObject = new GameObject("Hair");
+                    childObject.transform.SetParent(head);
+                    childObject.transform.localPosition = new Vector3(0, -0.0275f);
+                    childObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                    childObject.transform.localScale = new Vector3(1f, 1f);
+                    var childSprite = childObject.AddComponent<SpriteRenderer>();
+                    childSprite.sprite = ModAPI.LoadSprite("sprites/Characters/roninHat.png");
+                    childSprite.sortingLayerName = "Top";
+
+                    var person = Instance.GetComponent<PersonBehaviour>();
+                    foreach (var body in person.Limbs)
+                    {
+                        if (body.gameObject.name == "UpperArmFront")
+                        {
+                            OtherStuff.SetBodyPartTexture(body, ModAPI.LoadTexture("sprites/Characters/roninArm.png"));
+                        }
+                        else if (body.gameObject.name == "LowerArmFront")
+                        {
+                            OtherStuff.SetBodyPartTexture(body, ModAPI.LoadTexture("sprites/Characters/roninArm.png"));
+                        }
+
+                        body.gameObject.AddComponent<CycleSkinTextures>();
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Characters/ronin.png"), ModAPI.LoadTexture("sprites/Characters/roninArm.png"), new string[] { "UpperArmFront", "LowerArmFront" }, true, "Mask On", ModAPI.LoadSprite("sprites/Characters/roninHat.png"));
+                        body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Characters/roninMaskless.png"), ModAPI.LoadTexture("sprites/Characters/roninArm.png"), new string[] { "UpperArmFront", "LowerArmFront" }, true, "Mask Off", ModAPI.LoadSprite("sprites/Characters/roninHair.png"));
+                    }
                 }
             });
 
