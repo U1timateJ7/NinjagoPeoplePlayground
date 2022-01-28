@@ -3,7 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using System.IO;
+using System.Collections;
+using System;
 
 namespace Ninjago
 {
@@ -75,6 +76,8 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiFusionMaskless.png"), true, "Fusion (No Mask)", ModAPI.LoadSprite("sprites/Kai/kaiHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiResistance.png"), true, "Resistance", ModAPI.LoadSprite("sprites/empty.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Kai/kaiResistanceMaskless.png"), true, "Resistance (No Mask)", ModAPI.LoadSprite("sprites/Kai/kaiLegacyHair.png"));
+                        
+                        body.gameObject.AddComponent<HumanTorch>();
                     }
                 }
             });
@@ -264,7 +267,7 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Zane/zaneResistanceCloakMaskless.png"), true, "Resistance (Cloaked, No Mask)", ModAPI.LoadSprite("sprites/Zane/zaneLegacyHair.png"));
                     }
 
-                    Instance.transform.localScale = Vector2.one * Random.Range(1.59f, 2f) / 2f / 0.82397f;
+                    Instance.transform.localScale = Vector2.one * UnityEngine.Random.Range(1.59f, 2f) / 2f / 0.82397f;
 
                     Instance.GetComponent<PersonBehaviour>().SetBodyTextures(skin);
                 }
@@ -325,6 +328,11 @@ namespace Ninjago
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydFusionMaskless.png"), true, "Fusion (No Mask)", ModAPI.LoadSprite("sprites/Lloyd/lloydHair.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydResistance.png"), true, "Resistance", ModAPI.LoadSprite("sprites/empty.png"));
                         body.gameObject.GetComponent<CycleSkinTextures>().AddNewTexture(ModAPI.LoadTexture("sprites/Lloyd/lloydResistanceMaskless.png"), true, "Resistance (No Mask)", ModAPI.LoadSprite("sprites/Lloyd/lloydLegacyHair.png"));
+
+                        if (body.gameObject.name == "LowerArmBack" || body.gameObject.name == "LowerArmFront")
+                        {
+                            body.gameObject.AddComponent<ContinuousLaser>();
+                        }
                     }
                 }
             });
@@ -474,7 +482,7 @@ namespace Ninjago
                     var person = Instance.GetComponent<PersonBehaviour>();
                     person.RandomisedSize = true;
 
-                    Instance.transform.localScale = Vector2.one * Random.Range(1.59f, 2f) / 2f / 0.82397f;
+                    Instance.transform.localScale = Vector2.one * UnityEngine.Random.Range(1.59f, 2f) / 2f / 0.82397f;
 
                     Instance.GetComponent<PersonBehaviour>().SetBodyTextures(skin);
                 }
@@ -548,7 +556,7 @@ namespace Ninjago
                     var childSprite = childObject.AddComponent<SpriteRenderer>();
                     childSprite.sprite = ModAPI.LoadSprite("sprites/Characters/overlordHair.png");
                     childSprite.sortingLayerName = "Top";
-                    Instance.transform.localScale = Vector2.one * Random.Range(2.59f, 3f) / 2f / 0.82397f;
+                    Instance.transform.localScale = Vector2.one * UnityEngine.Random.Range(2.59f, 3f) / 2f / 0.82397f;
                 }
             });
 
@@ -984,6 +992,206 @@ namespace Ninjago
             Scrollbar.GetComponent<Scrollbar>().targetGraphic = HandelBar.GetComponent<Image>();
             Scrollbar.GetComponent<RectTransform>().localPosition = Position;
             return Scrollbar;
+        }
+    }
+
+    public class ContinuousLaser : MonoBehaviour, Messages.IUseContinuous
+    {
+        public GameObject Laser;
+        public AudioSource Auds;
+        public bool CanUseAgain = true;
+        public RaycastHit2D hit;
+        public AudioClip LaserBeamSound;
+        public Coroutine LaserCoroutine;
+        public Texture2D LaserTexture;
+        public Color Tint = Color.white;
+        public Sprite none;
+        public bool Smokey;
+        public ParticleSystem smoke;
+
+        public void Start()
+        {
+            Auds = new GameObject().AddComponent<AudioSource>();
+            Auds.spatialBlend = 1;
+            FindObjectOfType<Global>().AddAudioSource(Auds, false);
+            Auds.transform.SetParent(transform, false);
+            Auds.gameObject.AddComponent<AudioDistortionFilter>().distortionLevel = 0.8f;
+            var smok = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/SmokeParticle"), transform.position, Quaternion.identity, transform);
+            smok.AddComponent<Optout>();
+            smoke = smok.GetComponent<ParticleSystem>();
+            var main = smoke.main;
+            main.playOnAwake = false;
+            main.loop = true;
+            main.simulationSpace = ParticleSystemSimulationSpace.World;
+            var shape = smoke.shape;
+            shape.spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            var em = smoke.emission;
+            em.rateOverTime = new ParticleSystem.MinMaxCurve(5f);
+            em.enabled = true;
+            var render = smok.GetComponent<ParticleSystemRenderer>();
+            render.material.color = Tint;
+            smoke.Stop();
+        }
+
+        public void UseContinuous(ActivationPropagation activation)
+        {
+            if (!Laser)
+            {
+                Laser = new GameObject();
+                Laser.AddComponent<LineRenderer>().useWorldSpace = false;
+                Laser.GetComponent<LineRenderer>().SetPosition(0, new Vector3(0, -0.14f, 0));
+                Laser.GetComponent<LineRenderer>().SetPosition(1, new Vector3(0, -1.1f, 0));
+                Laser.GetComponent<LineRenderer>().startWidth = 0.2f;
+                Laser.GetComponent<LineRenderer>().endWidth = 0.25f;
+                Laser.GetComponent<LineRenderer>().startColor = Tint;
+                Laser.GetComponent<LineRenderer>().endColor = Tint;
+                Laser.GetComponent<LineRenderer>().textureMode = LineTextureMode.Tile;
+                Material material = new Material(ModAPI.FindMaterial("VeryBright"));
+                material.mainTexture = LaserTexture;
+                material.mainTexture.wrapMode = TextureWrapMode.Repeat;
+                Laser.transform.SetParent(transform, false);
+                Laser.GetComponent<LineRenderer>().material = material;
+                Auds.clip = LaserBeamSound;
+                Auds.loop = true;
+                Auds.Play();
+                if (Smokey)
+                {
+                    smoke.Play();
+                }
+            }
+            hit = Physics2D.Raycast(transform.position + (-transform.up * 0.15f), -transform.up, 9999);
+            Laser.GetComponent<LineRenderer>().SetPosition(1, new Vector3(0.06f, -Vector2.Distance(transform.position, hit.point), 0));
+            if (CanUseAgain)
+            {
+                if (LaserCoroutine != null)
+                {
+                    StopCoroutine(LaserCoroutine);
+                    LaserCoroutine = null;
+                }
+                LaserCoroutine = StartCoroutine(LaserShotInterval(hit));
+            }
+        }
+
+        IEnumerator LaserShotInterval(RaycastHit2D hit)
+        {
+            CanUseAgain = false;
+            BlasterboltBehaviour blasterboltPrefab = ModAPI.FindSpawnable("Blaster Rifle").Prefab.GetComponent<BlasterBehaviour>().Bolt.GetComponent<BlasterboltBehaviour>();
+            if (hit.collider)
+            {
+                Vector2 normal = hit.normal;
+                float z = Mathf.Atan2(normal.y, normal.x);
+                bool flag = WaterBehaviour.IsPointUnderWater(hit.point);
+                if (flag)
+                {
+                    ExplosionCreator.CreateUnderwaterExplosionEffect(new ExplosionCreator.ExplosionParameters()
+                    {
+                        Position = hit.point
+                    }, false);
+                }
+                else
+                {
+                    //     Instantiate<GameObject>(blasterboltPrefab.ImpactEffect, (Vector3)hit.point, Quaternion.Euler(0.0f, 0.0f, z)).transform.up = (Vector3)normal;
+                    //     Instantiate<GameObject>(blasterboltPrefab.HitDecal, (Vector3)hit.point, Quaternion.identity, hit.transform);
+                }
+                ExplosionCreator.CreatePulseExplosion(hit.point, blasterboltPrefab.ImpactStrength * 4, 1f, !flag && blasterboltPrefab.SpawnExplosionEffect, false);
+                if (blasterboltPrefab.CreateExplosion)
+                    ExplosionCreator.CreateExplosionWithWater(WaterBehaviour.IsPointUnderWater(hit.point), new ExplosionCreator.ExplosionParameters(8U, hit.point, 4f, blasterboltPrefab.ExplosionDamage * 3, false, dismember: 0.2f), false);
+                PhysicalBehaviour physicalBehaviour;
+                if (Global.main.PhysicalObjectsInWorldByTransform.TryGetValue(hit.transform, out physicalBehaviour) && physicalBehaviour.SimulateTemperature)
+                    physicalBehaviour.Temperature = Mathf.Lerp(physicalBehaviour.Temperature, blasterboltPrefab.TemperatureTarget, 0.05f / physicalBehaviour.ObjectArea);
+                hit.transform.SendMessage("Shot", new Shot(normal, hit.point, blasterboltPrefab.damage * 4), SendMessageOptions.DontRequireReceiver);
+                hit.transform.SendMessage("Decal", new DecalInstruction(blasterboltPrefab.ImpactDecal, hit.point, calculateDecalSize(blasterboltPrefab.damage)), SendMessageOptions.DontRequireReceiver);
+
+                float calculateDecalSize(float dmg) => Mathf.Max(Mathf.Pow(dmg, 3.35f) / Mathf.Pow(10f, 8f), 0.15f) * blasterboltPrefab.DecalSizeMultiplier;
+            }
+            yield return new WaitForSeconds(0.05f);
+            CanUseAgain = true;
+            yield return new WaitForSeconds(0.05f);
+            Destroy(Laser);
+            Auds.loop = false;
+            Auds.Stop();
+            if (Smokey)
+            {
+                smoke.Stop();
+            }
+        }
+    }
+
+    public class HumanTorch : MonoBehaviour, Messages.IUse
+    {
+        public GameObject BurnObject;
+        bool isPeople = false;
+        public Texture2D JohnnySkin;
+        public Texture2D OgSkin;
+
+        public void Update()
+        {
+            if (BurnObject)
+            {
+                BurnObject.transform.position = transform.position;
+            }
+            if (gameObject.GetComponent<LimbBehaviour>().PhysicalBehaviour.OnFire)
+                gameObject.GetComponent<LimbBehaviour>().PhysicalBehaviour.Extinguish();
+
+            if (isPeople && BurnObject)
+                StartCoroutine(Relight());
+
+        }
+
+        public void Use(ActivationPropagation activationPropagation)
+        {
+            foreach (LimbBehaviour body in GetComponentInParent<PersonBehaviour>().Limbs)
+            {
+                body.GetComponent<HumanTorch>().Burn();
+            }
+        }
+
+        public void Burn()
+        {
+            if (!isPeople)
+            {
+                gameObject.GetComponent<LimbBehaviour>().PhysicalBehaviour.burnIntensity = 0;
+                gameObject.GetComponent<LimbBehaviour>().PhysicalBehaviour.Properties.Burnrate = 0.000001f;
+                BurnObject = GameObject.Instantiate(ModAPI.FindSpawnable("Brick").Prefab);
+                BurnObject.GetComponent<Collider2D>().enabled = false;
+                BurnObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                BurnObject.GetComponent<SpriteRenderer>().color = Color.clear;
+                BurnObject.transform.position = transform.position;
+                BurnObject.transform.SetParent(transform);
+                BurnObject.GetComponent<PhysicalBehaviour>().burnIntensity = 35;
+                BurnObject.GetComponent<PhysicalBehaviour>().Properties.Flammability = 100;
+                BurnObject.GetComponent<PhysicalBehaviour>().Properties.Burnrate = 0.000001f;
+                isPeople = true;
+            }
+
+            else if (isPeople)
+            {
+                Destroy(BurnObject);
+                isPeople = false;
+            }
+        }
+
+        public void OnCollisionEnter2D(Collision2D other)
+        {
+            if (isPeople && other.gameObject.GetComponent<LimbBehaviour>())
+            {
+                other.gameObject.GetComponent<LimbBehaviour>().PhysicalBehaviour.Ignite();
+                other.gameObject.GetComponent<LimbBehaviour>().PhysicalBehaviour.Ignite();
+                other.gameObject.GetComponent<LimbBehaviour>().PhysicalBehaviour.Ignite();
+                other.gameObject.GetComponent<LimbBehaviour>().PhysicalBehaviour.Ignite();
+                other.gameObject.GetComponent<LimbBehaviour>().PhysicalBehaviour.Ignite();
+            }
+        }
+
+        public virtual IEnumerator Relight()
+        {
+            if (BurnObject)
+            {
+                //     BurnObject.GetComponent<PhysicalBehaviour>().Extinguish();
+                //      BurnObject.GetComponent<PhysicalBehaviour>().Ignite();
+                BurnObject.GetComponent<PhysicalBehaviour>().burnIntensity = 3.5f;
+            }
+            yield return new WaitForSeconds(4);
         }
     }
 }
